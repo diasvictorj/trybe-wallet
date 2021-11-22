@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { loginAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +13,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleBtn = this.handleBtn.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
   handleBtn() {
@@ -23,18 +27,26 @@ class Login extends React.Component {
     return (this.setState(() => ({ isBtnDisable: true })));
   }
 
+  submitLogin(event) {
+    event.preventDefault();
+    const { savingEmail, history } = this.props;
+    const { email } = this.state;
+    savingEmail(email);
+    history.push('/carteira');
+  }
+
   handleChange(event) {
     const { value, type } = event.target;
     switch (type) {
     case ('email'):
       return (this.setState(() => ({
         email: value,
-      }), this.handleBtn())
+      }), () => this.handleBtn())
       );
     case ('password'):
       return (this.setState(() => ({
         password: value,
-      }), this.handleBtn())
+      }), () => this.handleBtn())
       );
 
     default:
@@ -64,7 +76,7 @@ class Login extends React.Component {
             type="button"
             id="submit-login-btn"
             disabled={ isBtnDisable }
-            onClick
+            onClick={ this.submitLogin }
           >
             Entrar
           </button>
@@ -74,4 +86,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  savingEmail: (email) => dispatch(loginAction(email)),
+});
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  savingEmail: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);
