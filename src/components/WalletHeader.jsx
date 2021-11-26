@@ -6,14 +6,19 @@ class WalletHeader extends Component {
   constructor() {
     super();
     this.state = {
-      value: 0,
       currency: 'BRL',
     };
   }
 
   render() {
-    const { value, currency } = this.state;
-    const { email } = this.props;
+    const { currency } = this.state;
+    const { email, expenses } = this.props;
+    const convertToBrl = expenses.map(
+      (expense) => expense.value * Object.entries(expense.exchangeRates).find(
+        (element) => expense.currency === element[0],
+      )[1].ask,
+    );
+    const valueExpended = convertToBrl.reduce((acc, e) => (e) + acc, 0);
     return (
       <header>
         <span data-testid="email-field">
@@ -21,7 +26,7 @@ class WalletHeader extends Component {
         </span>
         <br />
         <span data-testid="total-field">
-          { value }
+          { valueExpended }
         </span>
         <br />
         <span data-testid="header-currency-field">
@@ -35,9 +40,13 @@ class WalletHeader extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 WalletHeader.propTypes = {
   email: PropTypes.string.isRequired,
-};
+  expenses: PropTypes.shape({
+    reduce: PropTypes.func,
+  }),
+}.isRequired;
 
 export default connect(mapStateToProps, null)(WalletHeader);
