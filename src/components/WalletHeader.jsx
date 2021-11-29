@@ -13,10 +13,10 @@ class WalletHeader extends Component {
   render() {
     const { currency } = this.state;
     const { email, expenses } = this.props;
+    /* Durante a monitoria foi constatado que "expenses" chega nesse ponto do cógido sempre definido
+    console.log(expenses) */
     const convertToBrl = expenses.map(
-      (expense) => expense.value * Object.entries(expense.exchangeRates).find(
-        (element) => expense.currency === element[0],
-      )[1].ask,
+      (expense) => expense.value * expense.exchangeRates[expense.currency].ask,
     );
     const valueExpended = convertToBrl.reduce((acc, e) => (e) + acc, 0);
     return (

@@ -8,6 +8,7 @@ export function getDataFromApi(data) {
   return (dispatch) => {
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
-      .then((rates) => dispatch(expensesAdd({ ...data, exchangeRates: rates })));
+      .then((rates) => dispatch(expensesAdd({ ...data, exchangeRates: rates })))
+      .catch((e) => console.log(e));
   };
 }

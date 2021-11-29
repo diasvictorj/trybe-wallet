@@ -10,7 +10,7 @@ class Expenses extends Component {
       value: 0,
       description: '',
       currencies: [],
-      currency: 'BRL',
+      currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
       id: 0,
@@ -133,8 +133,7 @@ class Expenses extends Component {
     );
   }
 
-  handleClick() {
-    const { savingExpenses } = this.props;
+  async handleClick() {
     const { value,
       description,
       currency,
@@ -152,7 +151,8 @@ class Expenses extends Component {
       tag,
     };
 
-    savingExpenses(expenseObj);
+    const { savingExpenses } = this.props;
+    await savingExpenses(expenseObj);
     const form = document.getElementById('form');
     form.reset();
     this.setState((prevState) => ({ id: prevState.id + 1 }));

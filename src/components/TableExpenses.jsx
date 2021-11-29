@@ -1,13 +1,18 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class TableExpenses extends Component {
   render() {
+    /* const {
+      expenses,
+    } = this.props; */
     return (
       <div>
         <header>
           <table>
             <td>
-              <th id="Descrição" value="Descrição">Descrição</th>
+              <th id="Descrição" value>Descrição </th>
               <th id="Tag" value="">Tag</th>
               <th id="Método de pagamento" value="">Método de pagamento</th>
               <th id="Valor" value="">Valor</th>
@@ -24,4 +29,11 @@ class TableExpenses extends Component {
   }
 }
 
-export default TableExpenses;
+TableExpenses.propTypes = {
+  expenses: PropTypes.isRequired,
+};
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps, null)(TableExpenses);
