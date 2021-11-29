@@ -54,12 +54,12 @@ class Expenses extends Component {
             data-testid="currency-input"
             id="currency"
             name="currency"
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           >
             {
               currencies.length === 0 ? null : (
                 currencies.map((curren) => (
-                  <option key={ curren } data-testid={ curren }>{curren}</option>))
+                  <option key={curren} data-testid={curren}>{curren}</option>))
               )
             }
           </select>
@@ -78,8 +78,8 @@ class Expenses extends Component {
           <select
             data-testid="method-input"
             name="method"
-            onChange={ this.handleChange }
-            value={ method }
+            onChange={this.handleChange}
+            value={method}
             id="method"
           >
             <option value="Dinheiro">Dinheiro</option>
@@ -92,7 +92,7 @@ class Expenses extends Component {
             id="tag"
             name="tag"
             data-testid="tag-input"
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           >
             <option>Alimentação</option>
             <option>Lazer</option>
@@ -113,7 +113,7 @@ class Expenses extends Component {
             type="text"
             id="text-input"
             name="value"
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
             placeholder="valor da despesa"
             data-testid="value-input"
           />
@@ -125,7 +125,7 @@ class Expenses extends Component {
             name="description"
             placeholder="descrição"
             data-testid="description-input"
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </label>
         {this.formGenerate2()}
@@ -155,7 +155,15 @@ class Expenses extends Component {
     await savingExpenses(expenseObj);
     const form = document.getElementById('form');
     form.reset();
-    this.setState((prevState) => ({ id: prevState.id + 1 }));
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+      value: 0,
+      description: '',
+      currencies: [],
+      currency: 'USD',
+      method: '',
+      tag: '',
+    }));
   }
 
   render() {
@@ -165,7 +173,7 @@ class Expenses extends Component {
         <button
           type="button"
           value="Adicionar despesa"
-          onClick={ this.handleClick }
+          onClick={this.handleClick}
         >
           Adicionar despesa
         </button>
