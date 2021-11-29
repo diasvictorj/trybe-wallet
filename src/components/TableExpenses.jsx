@@ -29,9 +29,9 @@ class TableExpenses extends Component {
   }
 }
 
-TableExpenses.propTypes = {
+/* TableExpenses.propTypes = {
   expenses: PropTypes.isRequired,
-};
+}; */
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
